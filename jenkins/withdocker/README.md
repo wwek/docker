@@ -1,0 +1,3 @@
+# jenkins:wihtdocker
+包含Docker二进制文件，在挂载了宿主机的docker.sock后
+可在Jenkins的Docker镜像中运行Docker

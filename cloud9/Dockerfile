@@ -110,8 +110,24 @@ USER root
 
 # ------------------------------------------------------------------------------
 # Expose ports.
-EXPOSE 80
+# SSH
+EXPOSE 22
+# WEB
+EXPOSE 80 81 82 83 84 85 86 87 88 89 90 8080 8888
+# 
 EXPOSE 3000
+
+# mysql
+EXPOSE 3306
+# redis
+EXPOSE 6379
+#mongodb
+EXPOSE 27017
+#memcache
+EXPOSE 11211 
+#postgresql
+EXPOSE 5432
+
 
 # ------------------------------------------------------------------------------
 # Start S6, define default command.

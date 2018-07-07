@@ -51,8 +51,8 @@ RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
    php72w-imap php72w-ldap php72w-odbc php72w-pear php72w-xml php72w-xmlrpc \
    php72w-devel \
 && pecl install igbinary redis \
-   echo 'extension=igbinary.so' > /etc/php.d/igbinary.ini \
-   echo 'extension=redis.so' > /etc/php.d/redis.ini \
+&& echo 'extension=igbinary.so' > /etc/php.d/igbinary.ini \
+&& echo 'extension=redis.so' > /etc/php.d/redis.ini \
 && yum clean all && rm -rf /var/cache/yum/
 
 # ------------------------------------------------------------------------------

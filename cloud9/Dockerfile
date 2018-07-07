@@ -53,16 +53,17 @@ RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
 && pecl install igbinary redis \
 && echo 'extension=igbinary.so' > /etc/php.d/igbinary.ini \
 && echo 'extension=redis.so' > /etc/php.d/redis.ini \
+&& mkdir -p $WORKSPACE/php \
 && yum clean all && rm -rf /var/cache/yum/
 
 # ------------------------------------------------------------------------------
 # Install PHP Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp
-ENV COMPOSER_VERSION 1.5.2
-RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/composer/getcomposer.org/da290238de6d63faace0343efbdd5aa9354332c5/web/installer \
+ENV COMPOSER_VERSION 1.6.5
+RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/composer/getcomposer.org/fe44bd5b10b89fbe7e7fc70e99e5d1a344a683dd/web/installer \
  && php -r " \
-    \$signature = '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410'; \
+    \$signature = '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061'; \
     \$hash = hash('SHA384', file_get_contents('/tmp/installer.php')); \
     if (!hash_equals(\$signature, \$hash)) { \
         unlink('/tmp/installer.php'); \
@@ -77,9 +78,9 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 # Install Golang
 ENV GO_VERSION=1.10.3
 RUN wget --no-check-certificate https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz \
- && tar zxvf go$GO_VERSION.linux-amd64.tar.gz -C /usr/local/ \
- && mkdir -p /data/go \
- && rm -rf go$GO_VERSION.linux-amd64.tar.gz
+&& tar zxvf go$GO_VERSION.linux-amd64.tar.gz -C /usr/local/ \
+&& mkdir -p $WORKSPACE/go \
+&& rm -rf go$GO_VERSION.linux-amd64.tar.gz
 
 RUN echo " " >> /root/.bashrc  \
 && echo 'WORKSPACE=/workspace' >> /root/.bashrc  \
@@ -97,6 +98,12 @@ ENV GOBIN $GOROOT/bin
 ENV GOPATH $WORKSPACE/go
 ENV PATH $PATH:$GOBIN:$GOPATH/bin
 
+
+# ------------------------------------------------------------------------------
+# Add Dev Tools
+RUN yum groupinstall -y "Development Tools" \
+ && yum install -y telnet bind-utils mtr tcpdump wireshark httpry psmisc \
+ && yum clean all && rm -rf /var/cache/yum/
 
 # ------------------------------------------------------------------------------
 # Add S6 conf

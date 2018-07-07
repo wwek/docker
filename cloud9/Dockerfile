@@ -49,6 +49,10 @@ ENV PHP_VERSION=7.2.7
 RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
 && yum install -y php72w php72w-opcache php72w-mysql php72w-pdo php72w-mbstring php72w-gd \
    php72w-imap php72w-ldap php72w-odbc php72w-pear php72w-xml php72w-xmlrpc \
+   php72w-devel \
+&& pecl install igbinary redis \
+   echo 'extension=igbinary.so' > /etc/php.d/igbinary.ini \
+   echo 'extension=redis.so' > /etc/php.d/redis.ini \
 && yum clean all && rm -rf /var/cache/yum/
 
 # ------------------------------------------------------------------------------
@@ -105,7 +109,6 @@ ADD conf/cloud9.conf /etc/supervisor/conf.d/
 
 # ------------------------------------------------------------------------------
 # Clean up  when done AND other
-ENV NODE_ENV="production"
 USER root
 
 # ------------------------------------------------------------------------------

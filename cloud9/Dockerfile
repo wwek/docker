@@ -117,6 +117,7 @@ ADD conf/cloud9.conf /etc/supervisor/conf.d/
 # ------------------------------------------------------------------------------
 # Clean up  when done AND other
 USER root
+ENV CLOUD9_AUTH="admin:cloud9"
 
 # ------------------------------------------------------------------------------
 # Expose ports.

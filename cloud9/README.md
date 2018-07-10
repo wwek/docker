@@ -1,4 +1,4 @@
-Cloud9 v3 Dockerfile
+Cloud9 Dockerfile
 =============
 
 Cloud9 是一个开源的WEB IDE，国内类似的产品为Coding WEB IDE

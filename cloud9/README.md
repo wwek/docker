@@ -14,11 +14,16 @@ Cloud9 是一个开源的WEB IDE，国内类似的产品为Coding WEB IDE
 
 ## 使用
 
-    docker run -it -d -p 80:80 wwek/cloud9
+### 快速使用
+```
+docker run -it -d -p 80:80 -v /your-path/workspace/:/workspace/ wwek/cloud9
+```
+默认登陆账号密码为 admin cloud9
 
-挂载工作空间
-
-    docker run -it -d -p 80:80 -v /your-path/workspace/:/workspace/ wwek/cloud9-docker
+## 自定义登陆账号和密码
+```
+docker run -it -d -p 80:80 -v /your-path/workspace/:/workspace/ -e "CLOUD9_AUTH=myuser:mypassword" wwek/cloud9
+```
     
 ## Build你自定义的docker镜像
 

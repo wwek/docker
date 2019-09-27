@@ -1,0 +1,7 @@
+#!/bin/sh
+## some killall commands to stop service may be
+
+kill `cat /var/run/nginx.pid`
+
+## Add your cleanup tasks above this line
+echo "finish: nginx"

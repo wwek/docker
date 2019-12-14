@@ -50,10 +50,10 @@ WORKDIR /data
 
 
 # Install confd.
-ENV CONFD_VERSION 0.15.0
-RUN curl -L "https://github.com/kelseyhightower/confd/releases/download/v$CONFD_VERSION/confd-$CONFD_VERSION-linux-amd64" > /usr/bin/confd && \
-    chmod +x /usr/bin/confd
-ENV CONFD_OPTS '--backend=env --onetime'
+#ENV CONFD_VERSION 0.15.0
+#RUN curl -L "https://github.com/kelseyhightower/confd/releases/download/v$CONFD_VERSION/confd-$CONFD_VERSION-linux-amd64" > /usr/bin/confd && \
+#    chmod +x /usr/bin/confd
+#ENV CONFD_OPTS '--backend=env --onetime'
 
 
 # Install s6-overlay 进程守护管理.
@@ -66,7 +66,7 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS 1
 
 # Set up a standard volume for logs.
 VOLUME ["/var/log/services"]
-
+VOLUME ["/var/log"]
 
 # 设置入口为 s6-based init.
 ENTRYPOINT ["/init"]

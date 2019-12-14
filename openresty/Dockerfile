@@ -1,29 +1,22 @@
-FROM openresty/openresty:alpine
+FROM openresty/openresty:centos
 
 
 LABEL version="1.0" \
-    description="openresty alpine" \
+    description="openresty centos" \
     maintainer="wwek<licoolgo@gmail.com>"
 
-#install base
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+# Install base packages.
+RUN yum -y makecache && yum -y update \ 
+    && yum -y install epel-release yum-plugin-ovl \
+    && yum -y install ssh wget curl iftop dnsutils \
+    openssl openssl-devel iproute \
+    glibc-static which \
+    && yum clean all && rm -rf /var/cache/yum/
 
-RUN apk update \
- && apk upgrade \
- && apk add bash \
- && apk add openssl \
- && apk add openssl-dev \
- && apk add nghttp2-dev \
- && apk add ca-certificates \
- && apk add wget \
- && apk add curl \
- && apk add tcpdump \
- && apk add iputils \
- && apk add iproute2 \
- && apk add libc6-compat \
- && apk add -U tzdata \
- rm -rf /var/cache/apk/*
+# && yum install openssh-server openssh-clients -y \
+# && yum install supervisor -y \
+# && systemctl enable sshd && systemctl start sshd \
 
-# 系统设置(设置时区)
+# 系统设置(设置时区).
 RUN rm -rf /etc/localtime \
- && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime

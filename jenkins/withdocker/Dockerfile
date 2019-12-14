@@ -1,6 +1,8 @@
 FROM jenkins/jenkins:lts
 
-MAINTAINER wwek <licoolgo@gmail.com>
+LABEL version="1.0" \
+    description="Jenkins:lts" \
+    maintainer="wwek<licoolgo@gmail.com>"
 
 USER root
 
@@ -20,8 +22,12 @@ RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID"
     && apt-get -y install docker-ce \
     && mkdir -p ~/.docker/ \
     && touch ~/.docker/config.json \
-    && echo "{"registry-mirrors": ["https://registry.docker-cn.com"]}" > ~/.docker/config.json
+    && echo '{"registry-mirrors": ["https://registry.docker-cn.com"]}' > ~/.docker/config.json
 
 # 系统设置(设置时区)
 RUN rm -rf /etc/localtime \
-    && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" >/etc/timezone
+
+# Switch user to jenkins
+USER jenkins

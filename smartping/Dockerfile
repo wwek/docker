@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 LABEL version="1.0" \
-    description="alpine:latest" \
+    description="smartping:latest" \
     maintainer="wwek<licoolgo@gmail.com>"
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
@@ -63,12 +63,16 @@ ENV LANG=C.UTF-8
 #        "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME" \
 #&& rm -rf /var/cache/apk/*
 
-# install Golang
-#RUN wget --no-check-certificate https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz /tmp
-#RUN tar -C /usr/local -xzf /tmp/go1.9.2.linux-amd64.tar.gz
-#ENV GOPATH /data/go
-#ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-#RUN mkdir -p "$GOPATH" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-#WORKDIR $GOPATH
+# install smartping
+ENV SMARTPING_ROOT /data/smartping
+ENV SMARTPING_VERSION="v0.5.0"
+RUN set -x \
+    && mkdir -p $SMARTPING_ROOT \
+    && cd $SMARTPING_ROOT \
+    && wget --no-check-certificate https://github.com/smartping/smartping/releases/download/$SMARTPING_VERSION/smartping-$SMARTPING_VERSION.tar.gz \
+    && tar zxvf smartping-$SMARTPING_VERSION.tar.gz \
+    && chmod +x bin/smartping \
+    && rm -rf smartping-$SMARTPING_VERSION.tar.gz
+WORKDIR $SMARTPING_ROOT
 
-CMD ["/bin/bash"]
+CMD $SMARTPING_ROOT/bin/smartping

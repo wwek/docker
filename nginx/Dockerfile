@@ -1,6 +1,5 @@
 FROM library/nginx:latest
 
-MAINTAINER wwek <licoolgo@gmail.com>
 
 LABEL version="1.0" \
     description="nginx latest" \

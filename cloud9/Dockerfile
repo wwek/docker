@@ -45,7 +45,7 @@ RUN sed -i -e 's_127.0.0.1_0.0.0.0_g' $CLOUD9_ROOT/configs/standalone.js
 
 # ------------------------------------------------------------------------------
 # Install PHP
-ENV PHP_VERSION=7.2.7
+ENV PHP_VERSION=7.2.8
 RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm \
 && yum install -y php72w php72w-opcache php72w-mysql php72w-pdo php72w-mbstring php72w-gd \
    php72w-imap php72w-ldap php72w-odbc php72w-pear php72w-xml php72w-xmlrpc \
@@ -76,7 +76,7 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 
 # ------------------------------------------------------------------------------
 # Install Golang
-ENV GO_VERSION=1.10.3
+ENV GO_VERSION=1.11
 RUN wget --no-check-certificate https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz \
 && tar zxvf go$GO_VERSION.linux-amd64.tar.gz -C /usr/local/ \
 && mkdir -p $WORKSPACE/go \
